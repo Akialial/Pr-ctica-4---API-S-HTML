@@ -1,0 +1,81 @@
+<html>
+
+<head>
+  <title>Reproductor de video</title>
+  <link rel="stylesheet" type="text/css" href="estilos.css">
+</head>
+
+<body>
+  <video id="videoPractica"></video>
+  <div id="controls">
+    <button id="playButton">Play</button>
+    <button id="pauseButton">Pause</button>
+    <button id="volumeUpButton">Subir volumen</button>
+    <button id="volumeDownButton">Bajar volumen</button>
+  </div>
+
+  <script>
+    const video = document.getElementById("videoPractica");
+    const playButton = document.getElementById("playButton");
+    const pauseButton = document.getElementById("pauseButton");
+    const volumeUpButton = document.getElementById("volumeUpButton");
+    const volumeDownButton = document.getElementById("volumeDownButton");
+    const controls = document.getElementById("controls");
+
+    video.addEventListener("loadstart", () => {
+      controls.style.display = "none";
+      alert("Cargando video, por favor espere...");
+      console.log("Cargando...");
+    });
+
+    video.addEventListener("loadstart", () => {
+      controls.style.display = "none";
+      console.log("Cargando...");
+    });
+
+    video.addEventListener("loadeddata", () => {
+      controls.style.display = "block";
+      console.log("Listo para reproducir");
+    });
+
+    video.addEventListener("error", () => {
+      console.log("Error al cargar el archivo");
+    });
+
+    playButton.addEventListener("click", () => {
+      video.play();
+    });
+
+    pauseButton.addEventListener("click", () => {
+      video.pause();
+    });
+
+    volumeUpButton.addEventListener("click", () => {
+      if (video.volume < 1) {
+        video.volume += 0.1;
+      }
+    });
+
+    volumeDownButton.addEventListener("click", () => {
+      if (video.volume > 0) {
+        video.volume -= 0.1;
+      }
+    });
+
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "video/*";
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        video.src = url;
+        console.log("Archivo cargado");
+      }
+    });
+
+    document.body.appendChild(fileInput);
+  </script>
+</body>
+
+</html>
